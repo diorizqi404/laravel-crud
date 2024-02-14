@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\kota;
 use App\Http\Controllers\KotaController;
 use App\Http\Controllers\SiswaController;
+use Illuminate\Support\Facades\Auth; // Add this line
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,29 +26,35 @@ Route::get('/lteadmin', function () {
 });
 
 // login
-Route::get('/', function () {
+Route::get('/login', function () {
     return view('login');
-})->name('loginForm');
+})->name('login');
 
 Route::post('/loginProcess', [AuthController::class, "login"])->name('loginProcess');
 
 
 // Siswa
-Route::get('/dashboard/data', [SiswaController::class, 'index'])->name('data');
+Route::get('/dashboard/data', [SiswaController::class, 'index'])->name('data')->middleware('auth');
 
-Route::post('/dashboard/data/create', [SiswaController::class, 'store'])->name('storeData');
+Route::post('/dashboard/data/create', [SiswaController::class, 'store'])->name('storeData')->middleware('auth');
 
-Route::get('/dashboard/data/edit/{nis}', [SiswaController::class, 'edit'])->name('editData');
+Route::get('/dashboard/data/edit/{nis}', [SiswaController::class, 'edit'])->name('editData')->middleware('auth');
 
-Route::put('/dashboard/data/{nis}', [SiswaController::class, 'update'])->name('updateData');
+Route::put('/dashboard/data/{nis}', [SiswaController::class, 'update'])->name('updateData')->middleware('auth');
 
-Route::delete('/dashboard/data/delete/{nis}', [SiswaController::class, 'destroy'])->name('deleteData');
+Route::delete('/dashboard/data/delete/{nis}', [SiswaController::class, 'destroy'])->name('deleteData')->middleware('auth');
 
 // kota
-Route::get('/dashboard/kota', [KotaController::class, 'index'])->name('kota');
-Route::post('/dashboard/kota/create', [KotaController::class, 'store'])->name('storeKota');
+Route::get('/dashboard/kota', [KotaController::class, 'index'])->name('kota')->middleware('auth');
+Route::post('/dashboard/kota/create', [KotaController::class, 'store'])->name('storeKota')->middleware('auth');
+Route::get('/dashboard/kota/edit/{id}', [KotaController::class, 'edit'])->name('editKota')->middleware('auth');
+Route::put('/dashboard/kota/{id}', [KotaController::class, 'update'])->name('updateKota')->middleware('auth');
+Route::delete('/dashboard/kota/delete/{id}', [KotaController::class, 'destroy'])->name('deleteKota')->middleware('auth');
 
-
+Auth::routes();
 
 // dashboard
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth')->name('dashboard');
+
+
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

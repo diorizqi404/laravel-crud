@@ -11,25 +11,13 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <img src="{{ asset('lte/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2"
+                <img src="{{ asset('me.jpeg') }}" class="img-circle elevation-2"
                     alt="User Image">
             </div>
             <div class="info">
-                <a href="#" class="d-block">Monkey D. Luffy</a>
+                <a href="#" class="d-block">Io.</a>
             </div>
         </div>
-
-        <!-- SidebarSearch Form -->
-        {{-- <div class="form-inline">
-        <div class="input-group" data-widget="sidebar-search">
-          <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
-          <div class="input-group-append">
-            <button class="btn btn-sidebar">
-              <i class="fas fa-search fa-fw"></i>
-            </button>
-          </div>
-        </div>
-      </div> --}}
 
         <!-- Sidebar Menu -->
         <nav class="mt-2">
@@ -61,7 +49,7 @@
                       </a>
                     </li>
                     <li class="nav-item">
-                      <a href="{{ url('/dashboard/kota') }}" class="nav-link @if (request()->is('dashboard/data')) active @endif">
+                      <a href="{{ url('/dashboard/kota') }}" class="nav-link @if (request()->is('dashboard/kota')) active @endif">
                         <i class="far fa-circle nav-icon"></i>
                         <p>Kota Tables</p>
                       </a>

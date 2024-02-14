@@ -18,6 +18,8 @@ class SiswaController extends Controller
         // Fetch all NamaKota from the kota table
         $kota = kota::pluck('NamaKota', 'id');
 
+        $paginate = 10;
+
         $katakunci = $request->katakunci;
         if(strlen($katakunci) ){
             $data = siswa::join('kota', 'siswa.Kota_ID', '=', 'kota.id')
@@ -28,19 +30,21 @@ class SiswaController extends Controller
                 ->orWhere('Alamat', 'like', "%{$katakunci}%")
                 ->orWhere('kota.NamaKota', 'like', "%{$katakunci}%")
                 ->select('siswa.*')
-                ->paginate(10);
+                ->paginate($paginate);
         }else {
-            // mengambil data dari tabel siswa dengan pagination 5 data
-            $data = Siswa::with('kota')->orderBy('Nis', 'asc')->paginate(10);
+            // mengambil data dari tabel siswa dengan pagination 10 data
+            $data = Siswa::with('kota')->orderBy('Nis', 'asc')->paginate($paginate);
         }
         
 
         // mengirim data ke view index
         return view('data')->with('data', $data)->with('kota', $kota);
-        return response()->json([
-            'data' => $data,
-            'kota' => $kota,
-        ]);
+
+        // API
+        // return response()->json([
+        //     'data' => $data,
+        //     'kota' => $kota,
+        // ]);
     }
 
     /**
@@ -57,67 +61,69 @@ class SiswaController extends Controller
     public function store(Request $request)
     {
         // menyimpan data inputan ke dalam session
-        // Session::flash('nis', $request->nis);
-        // Session::flash('nama', $request->nama);
-        // Session::flash('jeniskelamin', $request->jeniskelamin);
-        // Session::flash('tanggal', $request->tanggal);
-        // Session::flash('alamat', $request->alamat);
-        // Session::flash('Kota_ID', $request->kota);
+        Session::flash('nis', $request->nis);
+        Session::flash('nama', $request->nama);
+        Session::flash('jeniskelamin', $request->jeniskelamin);
+        Session::flash('tanggal', $request->tanggal);
+        Session::flash('alamat', $request->alamat);
+        Session::flash('Kota_ID', $request->kota);
 
         // validasi inputan 
-        // $request->validate([
-        //     'nis' => 'required|numeric|unique:siswa,Nis',
-        //     'nama' => 'required',
-        //     'jeniskelamin' => 'required|in:Laki-laki,Perempuan',
-        //     'tanggal' => 'required',
-        //     'alamat' => 'required',
-        //     'kota' => 'required',
-        // ], [
-        //     // pesan error
-        //     'nis.required' => 'Nis tidak boleh kosong',
-        //     'nis.numeric' => 'Nis harus berupa angka',
-        //     'nis.unique' => 'Nis sudah terdaftar',
-        //     'nama.required' => 'Nama tidak boleh kosong',
-        //     'jeniskelamin.required' => 'Jenis kelamin tidak boleh kosong',
-        //     'jeniskelamin.in' => 'Jenis kelamin harus Laki-laki atau Perempuan',
-        //     'tanggal.required' => 'Tanggal lahir tidak boleh kosong',
-        //     'alamat.required' => 'Alamat tidak boleh kosong',
-        //     'kota.required' => 'Kota tidak boleh kosong',
-        // ]);
+        $request->validate([
+            'nis' => 'required|numeric|unique:siswa,Nis',
+            'nama' => 'required',
+            'jeniskelamin' => 'required|in:Laki-laki,Perempuan',
+            'tanggal' => 'required',
+            'alamat' => 'required',
+            'kota' => 'required',
+        ], [
+            // pesan error
+            'nis.required' => 'Nis tidak boleh kosong',
+            'nis.numeric' => 'Nis harus berupa angka',
+            'nis.unique' => 'Nis sudah terdaftar',
+            'nama.required' => 'Nama tidak boleh kosong',
+            'jeniskelamin.required' => 'Jenis kelamin tidak boleh kosong',
+            'jeniskelamin.in' => 'Jenis kelamin harus Laki-laki atau Perempuan',
+            'tanggal.required' => 'Tanggal lahir tidak boleh kosong',
+            'alamat.required' => 'Alamat tidak boleh kosong',
+            'kota.required' => 'Kota tidak boleh kosong',
+        ]);
 
         // mengambil data dari form inputan        
-        // $data = [
-        //     'Nis' => $request->nis,
-        //     'Nama' => $request->nama,
-        //     'JenisKelamin' => $request->jeniskelamin,
-        //     'TanggalLahir' => $request->tanggal,
-        //     'Alamat' => $request->alamat,
-        //     'Kota_ID' => $request->kota,
-        // ];
+        $data = [
+            'Nis' => $request->nis,
+            'Nama' => $request->nama,
+            'JenisKelamin' => $request->jeniskelamin,
+            'TanggalLahir' => $request->tanggal,
+            'Alamat' => $request->alamat,
+            'Kota_ID' => $request->kota,
+        ];
 
         // menyimpan data ke database
-        // $siswa = siswa::create($data);
+        Siswa::create($data);
 
         // menghapus session
-        // $request->session()->forget(['nis', 'nama', 'jeniskelamin', 'tanggal', 'alamat', 'kota']);
+        $request->session()->forget(['nis', 'nama', 'jeniskelamin', 'tanggal', 'alamat', 'Kota_ID']);
 
         // redirect ke halaman data dengan pesan sukses
-        // return redirect()->route('data')->with('success', 'Data berhasil ditambahkan');
+        return redirect()->route('data')->with('success', 'Data berhasil ditambahkan');
         
-        $siswa = siswa::create([
-            'Nis' => $request->Nis,
-            'Nama' => $request->Nama,
-            'JenisKelamin' => $request->JenisKelamin,
-            'TanggalLahir' => $request->TanggalLahir,
-            'Alamat' => $request->Alamat,
-            'Kota_ID' => $request->Kota_ID,
-        ]);
+
+        // API
+        // $siswa = siswa::create([
+        //     'Nis' => $request->Nis,
+        //     'Nama' => $request->Nama,
+        //     'JenisKelamin' => $request->JenisKelamin,
+        //     'TanggalLahir' => $request->TanggalLahir,
+        //     'Alamat' => $request->Alamat,
+        //     'Kota_ID' => $request->Kota_ID,
+        // ]);
         
-        return response()->json([
-            'data' => $siswa,    
-            'status' => 'success',
-            'message' => 'Data berhasil ditambahkan'
-        ]);
+        // return response()->json([
+        //     'data' => $siswa,    
+        //     'status' => 'success',
+        //     'message' => 'Data berhasil ditambahkan'
+        // ]);
     }
 
     /**
@@ -148,42 +154,53 @@ class SiswaController extends Controller
     public function update(Request $request, $id)
     {
         // validasi inputan 
-        // $request->validate([
-        //     'nama' => 'required',
-        //     'jeniskelamin' => 'required',
-        //     'tanggal' => 'required',
-        //     'alamat' => 'required',
-        //     'kota' => 'required',
-        // ], [
-        //     // pesan error
-        //     'nama.required' => 'Nama tidak boleh kosong',
-        //     'jeniskelamin.required' => 'Jenis kelamin tidak boleh kosong',
-        //     'tanggal.required' => 'Tanggal lahir tidak boleh kosong',
-        //     'alamat.required' => 'Alamat tidak boleh kosong',
-        //     'kota.required' => 'Kota tidak boleh kosong',
-        // ]);
+        $request->validate([
+            'nama' => 'required',
+            'jeniskelamin' => 'required',
+            'tanggal' => 'required',
+            'alamat' => 'required',
+            'kota' => 'required',
+        ], [
+            // pesan error
+            'nama.required' => 'Nama tidak boleh kosong',
+            'jeniskelamin.required' => 'Jenis kelamin tidak boleh kosong',
+            'tanggal.required' => 'Tanggal lahir tidak boleh kosong',
+            'alamat.required' => 'Alamat tidak boleh kosong',
+            'kota.required' => 'Kota tidak boleh kosong',
+        ]);
 
         // mengambil data dari form inputan
         $data = [
             // 'Nis' => $request->Nis,
-            'Nama' => $request->Nama,
-            'JenisKelamin' => $request->JenisKelamin,
-            'TanggalLahir' => $request->TanggalLahir,
-            'Alamat' => $request->Alamat,
-            'Kota_ID' => $request->Kota_ID,
+            'Nama' => $request->nama,
+            'JenisKelamin' => $request->jeniskelamin,
+            'TanggalLahir' => $request->tanggal,
+            'Alamat' => $request->alamat,
+            'Kota_ID' => $request->kota,
         ];
 
         // menyimpan data ke database
         Siswa::where('Nis', $id)->update($data);
-        // $siswa = siswa::where('Nis', $nis)->first();
-        return response()->json([
-            'data' => $data,
-            'status' => 'success',
-            'message' => 'Data berhasil diedit',
-        ]);
-
         // redirect ke halaman data dengan pesan sukses
-        // return redirect()->route('data')->with('success', 'Data berhasil diedit');
+        return redirect()->route('data')->with('success', 'Data berhasil diedit');
+
+        // $siswa = siswa::where('Nis', $nis)->first();
+
+        // API
+        // $data = [
+        //     // 'Nis' => $request->Nis,
+        //     'Nama' => $request->Nama,
+        //     'JenisKelamin' => $request->JenisKelamin,
+        //     'TanggalLahir' => $request->TanggalLahir,
+        //     'Alamat' => $request->Alamat,
+        //     'Kota_ID' => $request->Kota_ID,
+        // ];
+        // return response()->json([
+        //     'data' => $data,
+        //     'status' => 'success',
+        //     'message' => 'Data berhasil diedit',
+        // ]);
+
     }
 
     /**
@@ -192,10 +209,12 @@ class SiswaController extends Controller
     public function destroy(string $id)
     {
         siswa::where('Nis', $id)->delete();
-        // return redirect()->route('data')->with('success', 'Data berhasil terhapus');
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Data berhasil terhapus',
-        ]);
+        return redirect()->route('data')->with('success', 'Data berhasil terhapus');
+ 
+        // API
+        // return response()->json([
+        //     'status' => 'success',
+        //     'message' => 'Data berhasil terhapus',
+        // ]);
     }
 }

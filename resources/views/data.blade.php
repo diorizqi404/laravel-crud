@@ -129,10 +129,12 @@
                                 <td>{{ $d->Kota->NamaKota ?? 'Belum Terisi' }}</td>
                                 <td>
                                     <a href='{{ route('editData', ['nis' => $d->Nis]) }}'
-                                        class="btn btn-warning btn-sm">Edit</a>
+                                        class="btn btn-warning btn-sm p-1 pb-0"><span class="material-symbols-outlined text-white fs-3">
+																					edit_square</span></a>
                                     <!-- Button trigger modal -->
-                                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
-                                        data-bs-target="#deleteModal">Delete</button>
+                                    <button type="button" class="btn btn-danger btn-sm p-1 pb-0" data-bs-toggle="modal"
+                                        data-bs-target="#deleteModal"><span class="material-symbols-outlined text-white fs-3">
+																					delete</span></button>
 
                                     <!-- Modal -->
                                     <div class="modal fade" id="deleteModal" tabindex="-1"
@@ -140,7 +142,7 @@
                                         <div class="modal-dialog modal-dialog-centered">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Peringatan!!</h1>
+                                                    <h1 class="modal-title fs-5 fw-bold" id="exampleModalLabel">Peringatan!!</h1>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close"></button>
                                                 </div>
@@ -150,7 +152,7 @@
                                                     Data yang terhapus tidak dapat dipulihkan!!
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-danger btn-sm"
+                                                    <button type="button" class="btn btn-danger me-2"
                                                         data-bs-dismiss="modal">Cancel</button>
                                                     <form action="{{ route('deleteData', ['nis' => $d->Nis]) }}"
                                                         method="POST" class="d-inline">
@@ -171,6 +173,7 @@
                 {{ $data->links() }}
             </div>
             <!-- /.card-body -->
+						
         </div>
     </div>
 @endsection

@@ -31,7 +31,7 @@
                                 <p>Jumlah Siswa</p>
                             </div>
                             <div class="icon">
-                              <i class="material-symbols-outlined">wc</i>
+                                <i class="material-symbols-outlined">wc</i>
                             </div>
                             <a href="{{ route('data') }}" class="small-box-footer">More info <i
                                     class="fas fa-arrow-circle-right"></i></a>
@@ -45,7 +45,7 @@
                                 <p>Jumlah Siswa Laki-laki</p>
                             </div>
                             <div class="icon">
-                              <i class="material-symbols-outlined">man</i>
+                                <i class="material-symbols-outlined">man</i>
                             </div>
                             <a href="{{ route('data') }}" class="small-box-footer">More info <i
                                     class="fas fa-arrow-circle-right"></i></a>
@@ -60,7 +60,7 @@
                                 <p>Jumlah Siswa Perempuan</p>
                             </div>
                             <div class="icon">
-                              <i class="material-symbols-outlined">woman</i>
+                                <i class="material-symbols-outlined">woman</i>
                             </div>
                             <a href="{{ route('data') }}" class="small-box-footer">More info <i
                                     class="fas fa-arrow-circle-right"></i></a>
@@ -75,7 +75,7 @@
                                 <p>Jumlah Kota</p>
                             </div>
                             <div class="icon">
-                              <i class="material-symbols-outlined">apartment</i>
+                                <i class="material-symbols-outlined">apartment</i>
                             </div>
                             <a href="{{ route('kota') }}" class="small-box-footer">More info <i
                                     class="fas fa-arrow-circle-right"></i></a>
@@ -84,38 +84,39 @@
                     <!-- ./col -->
                 </div>
                 <div class="row">
-                  <div class="col-4">
-                      {{-- PIE CHART KOTA --}}
-                      <div class="card card-danger w-auto">
-                          <div class="card-header">
-                              <h3 class="card-title">Siswa Berdasarkan Kota</h3>
-                          </div>
-                          <div class="card-body">
-                              <canvas id="pieChart"
-                                  style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-                          </div>
-                      </div>
-                      {{-- PIE CHART JENIS KELAMIN --}}
-                      <div class="card card-danger">
-                        <div class="card-header">
-                            <h3 class="card-title">Jenis Kelamin</h3>
+                    <div class="col-5">
+                        {{-- PIE CHART KOTA --}}
+                        <div class="card card-danger w-auto">
+                            <div class="card-header">
+                                <h3 class="card-title">Siswa Berdasarkan Kota</h3>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="pieChart"
+                                    style="min-height: 250px; height: 250px; max-height: 350px; max-width: 100%;"></canvas>
+                            </div>
                         </div>
-                        <div class="card-body">
-                            <canvas id="pieChart2" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                        {{-- PIE CHART JENIS KELAMIN --}}
+                        <div class="card card-danger">
+                            <div class="card-header">
+                                <h3 class="card-title">Jenis Kelamin Siswa</h3>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="pieChart2"
+                                    style="min-height: 250px; height: 250px; max-height: 350px; max-width: 100%;"></canvas>
+                            </div>
                         </div>
-                      </div>
                     </div>
                     {{-- BAR CHART TAHUN LAHIR --}}
-                    <div class="card card-danger col-8 p-0">
-                      <div class="card-header">
-                          <h3 class="card-title">Jenis Kelamin</h3>
-                      </div>
-                      <div class="card-body">
-                        <canvas id="barChart"></canvas>
-                      </div>
+                    <div class="card card-danger col-7 p-0">
+                        <div class="card-header">
+                            <h3 class="card-title">Tahun Kelahiran Siswa</h3>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="barChart"></canvas>
+                        </div>
                     </div>
-                    
-              </div>
+
+                </div>
             </div>
     </div><!-- /.container-fluid -->
     </section>
@@ -135,20 +136,38 @@
                 datasets: [{
                     data: {!! json_encode(array_column($dataChart, 'total')) !!},
                     backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
                         'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 99, 132, 0.2)',
                         'rgba(255, 206, 86, 0.2)',
                         'rgba(75, 192, 192, 0.2)',
                         'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(99, 255, 132, 0.2)',
+                        'rgba(235, 162, 54, 0.2)',
+                        'rgba(86, 206, 255, 0.2)',
+                        'rgba(192, 75, 192, 0.2)',
+                        'rgba(102, 153, 255, 0.2)',
+                        'rgba(159, 64, 255, 0.2)',
+                        'rgba(132, 99, 255, 0.2)',
+                        'rgba(162, 54, 235, 0.2)',
+                        'rgba(206, 86, 255, 0.2)',
                     ],
                     borderColor: [
-                        'rgba(255, 99, 132, 1)',
                         'rgba(54, 162, 235, 1)',
+                        'rgba(255, 99, 132, 1)',
                         'rgba(255, 206, 86, 1)',
                         'rgba(75, 192, 192, 1)',
                         'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
+                        'rgba(255, 159, 64, 1)',
+                        'rgba(99, 255, 132, 1)',
+                        'rgba(235, 162, 54, 1)',
+                        'rgba(86, 206, 255, 1)',
+                        'rgba(192, 75, 192, 1)',
+                        'rgba(102, 153, 255, 1)',
+                        'rgba(159, 64, 255, 1)',
+                        'rgba(132, 99, 255, 1)',
+                        'rgba(162, 54, 235, 1)',
+                        'rgba(206, 86, 255, 1)',
                     ],
                     borderWidth: 1
                 }]
@@ -162,20 +181,38 @@
                 datasets: [{
                     data: [{{ $jumlahSiswaLaki }}, {{ $jumlahSiswaPerempuan }}],
                     backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
                         'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 99, 132, 0.2)',
                         'rgba(255, 206, 86, 0.2)',
                         'rgba(75, 192, 192, 0.2)',
                         'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(99, 255, 132, 0.2)',
+                        'rgba(235, 162, 54, 0.2)',
+                        'rgba(86, 206, 255, 0.2)',
+                        'rgba(192, 75, 192, 0.2)',
+                        'rgba(102, 153, 255, 0.2)',
+                        'rgba(159, 64, 255, 0.2)',
+                        'rgba(132, 99, 255, 0.2)',
+                        'rgba(162, 54, 235, 0.2)',
+                        'rgba(206, 86, 255, 0.2)',
                     ],
                     borderColor: [
-                        'rgba(255, 99, 132, 1)',
                         'rgba(54, 162, 235, 1)',
+                        'rgba(255, 99, 132, 1)',
                         'rgba(255, 206, 86, 1)',
                         'rgba(75, 192, 192, 1)',
                         'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
+                        'rgba(255, 159, 64, 1)',
+                        'rgba(99, 255, 132, 1)',
+                        'rgba(235, 162, 54, 1)',
+                        'rgba(86, 206, 255, 1)',
+                        'rgba(192, 75, 192, 1)',
+                        'rgba(102, 153, 255, 1)',
+                        'rgba(159, 64, 255, 1)',
+                        'rgba(132, 99, 255, 1)',
+                        'rgba(162, 54, 235, 1)',
+                        'rgba(206, 86, 255, 1)',
                     ],
                     borderWidth: 1
                 }]

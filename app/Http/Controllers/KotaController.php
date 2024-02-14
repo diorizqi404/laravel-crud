@@ -11,11 +11,15 @@ class KotaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        // mengambil data dari tabel kota dengan pagination 5 data
-        $kota = Kota::orderBy('id', 'asc')->paginate(5);
-
+			$katakunci = $request->katakunci;
+			if (strlen($katakunci)){
+				$kota = Kota::where('NamaKota', 'like', "%$katakunci%")->paginate(5);
+			}else {
+				// mengambil data dari tabel kota dengan pagination 5 data
+				$kota = Kota::orderBy('id', 'asc')->paginate(5);
+			}
         // mengirim data ke view index
         return view('kota')->with('kota', $kota);
     }
@@ -49,7 +53,7 @@ class KotaController extends Controller
             'NamaKota' => $request->namakota,
         ];
 
-        kota::create($kota);
+        Kota::create($kota);
 
         // menghapus session
         $request->session()->forget(['namakota']);
@@ -68,9 +72,12 @@ class KotaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        //
+        // mengambil data kota berdasarkan id yang dipilih
+        $kota = Kota::where('id', $id)->first();
+
+        return view('kotaEdit')->with('kota', $kota);
     }
 
     /**
@@ -78,14 +85,28 @@ class KotaController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'namakota' => 'required|unique:kota,NamaKota',
+        ], [
+            // pesan error
+            'namakota.required' => 'Nama Kota tidak boleh kosong',
+            'namakota.unique' => 'Nama Kota sudah terdaftar',
+        ]);
+
+        $kota = [
+            'NamaKota' => $request->namakota,
+        ];
+
+        Kota::where('id', $id)->update($kota);
+        return redirect()->route('kota')->with('success', 'Data berhasil diubah');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        Kota::where('id', $id)->delete();
+				return redirect()->route('kota')->with('success', 'Data berhasil terhapus');
     }
 }

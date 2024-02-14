@@ -13,7 +13,7 @@ class DashboardController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-    }
+    } 
     public function index()
     {
         // mengambil data untuk chart dari tabel siswa dan kota dengan group by kota dan count total siswa per kota
