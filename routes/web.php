@@ -21,9 +21,13 @@ use Illuminate\Support\Facades\Route;
 
 
 // cek view adminlte saja
-Route::get('/lteadmin', function () {
-    return view('layout.adminlte');
-});
+// Route::get('/lteadmin', function () {
+//     return view('layout.adminlte');
+// });
+
+Route::get('/', function () {
+    return view('welcome');
+})->middleware('guest');
 
 // login
 Route::get('/login', function () {
