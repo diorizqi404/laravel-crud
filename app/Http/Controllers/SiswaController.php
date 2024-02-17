@@ -16,7 +16,7 @@ class SiswaController extends Controller
     public function index(Request $request)
     {
         // Fetch all NamaKota from the kota table
-        $kota = kota::pluck('NamaKota', 'id');
+        $kota = Kota::pluck('NamaKota', 'id');
 
         $paginate = 10;
 
@@ -41,10 +41,10 @@ class SiswaController extends Controller
         return view('data')->with('data', $data)->with('kota', $kota);
 
         // API
-        // return response()->json([
-        //     'data' => $data,
-        //     'kota' => $kota,
-        // ]);
+        return response()->json([
+            'data' => $data,
+            'kota' => $kota,
+        ]);
     }
 
     /**
@@ -206,9 +206,9 @@ class SiswaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        siswa::where('Nis', $id)->delete();
+        Siswa::find($id)->delete();
         return redirect()->route('data')->with('success', 'Data berhasil terhapus');
  
         // API

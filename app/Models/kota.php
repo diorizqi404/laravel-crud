@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class kota extends Model
+class Kota extends Model
 {
     use HasFactory;
     protected $table = 'kota';
@@ -16,6 +16,6 @@ class kota extends Model
 
     public function siswa()
     {
-        return $this->hasMany(siswa::class);
+        return $this->hasMany(Siswa::class);
     }
 }

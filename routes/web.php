@@ -46,7 +46,7 @@ Route::get('/dashboard/data/edit/{nis}', [SiswaController::class, 'edit'])->name
 
 Route::put('/dashboard/data/{nis}', [SiswaController::class, 'update'])->name('updateData')->middleware('auth');
 
-Route::delete('/dashboard/data/delete/{nis}', [SiswaController::class, 'destroy'])->name('deleteData')->middleware('auth');
+Route::delete('/dashboard/data/delete/{id}', [SiswaController::class, 'destroy'])->name('deleteData')->middleware('auth');
 
 // kota
 Route::get('/dashboard/kota', [KotaController::class, 'index'])->name('kota')->middleware('auth');

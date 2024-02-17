@@ -126,18 +126,18 @@
                                 <td>{{ $d->JenisKelamin }}</td>
                                 <td>{{ $d->TanggalLahir }}</td>
                                 <td>{{ $d->Alamat }}</td>
-                                <td>{{ $d->Kota->NamaKota ?? 'Belum Terisi' }}</td>
+                                <td>{{ $d->kota->NamaKota ?? 'Belum Terisi' }}</td>
                                 <td>
                                     <a href='{{ route('editData', ['nis' => $d->Nis]) }}'
                                         class="btn btn-warning btn-sm p-1 pb-0"><span class="material-symbols-outlined text-white fs-3">
 																					edit_square</span></a>
                                     <!-- Button trigger modal -->
                                     <button type="button" class="btn btn-danger btn-sm p-1 pb-0" data-bs-toggle="modal"
-                                        data-bs-target="#deleteModal"><span class="material-symbols-outlined text-white fs-3">
+                                        data-bs-target="#deleteModal{{ $d->id }}"><span class="material-symbols-outlined text-white fs-3">
 																					delete</span></button>
 
                                     <!-- Modal -->
-                                    <div class="modal fade" id="deleteModal" tabindex="-1"
+                                    <div class="modal fade" id="deleteModal{{ $d->id }}" tabindex="-1"
                                         aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered">
                                             <div class="modal-content">
@@ -154,7 +154,7 @@
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-danger me-2"
                                                         data-bs-dismiss="modal">Cancel</button>
-                                                    <form action="{{ route('deleteData', ['nis' => $d->Nis]) }}"
+                                                    <form action="{{ route('deleteData', ['id' => $d->id]) }}"
                                                         method="POST" class="d-inline">
                                                         @csrf
                                                         @method('DELETE')

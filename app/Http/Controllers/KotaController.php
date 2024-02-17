@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Kota;
+use App\Models\kota;
 use Illuminate\Support\Facades\Session;
 
 class KotaController extends Controller
